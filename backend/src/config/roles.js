@@ -1,0 +1,73 @@
+
+const ROLES = Object.freeze({
+  COMPANY_ADMIN: "company_admin",
+  PROCUREMENT_MANAGER: "procurement_manager",
+  REQUESTER: "requester",
+  APPROVER: "approver",
+  FINANCE: "finance",
+  AUDITOR: "auditor",
+  VENDOR: "vendor",
+});
+
+const PERMISSIONS = Object.freeze({
+  COMPANY_READ: "company:read",
+  COMPANY_UPDATE: "company:update",
+
+  USERS_READ: "users:read",
+  USERS_CREATE: "users:create",
+  USERS_UPDATE_ROLE: "users:update_role",
+  USERS_UPDATE_STATUS: "users:update_status",
+
+  PURCHASE_REQUEST_CREATE: "purchase_request:create",
+  PURCHASE_REQUEST_READ: "purchase_request:read",
+  PURCHASE_REQUEST_APPROVE: "purchase_request:approve",
+
+  PROCUREMENT_MANAGE: "procurement:manage",
+  FINANCE_MANAGE: "finance:manage",
+  AUDIT_READ: "audit:read",
+
+  VENDOR_PORTAL_ACCESS: "vendor_portal:access",
+});
+
+const ROLE_PERMISSIONS = Object.freeze({
+  [ROLES.COMPANY_ADMIN]: Object.values(PERMISSIONS),
+
+  [ROLES.PROCUREMENT_MANAGER]: [
+    PERMISSIONS.COMPANY_READ,
+    PERMISSIONS.USERS_READ,
+    PERMISSIONS.PURCHASE_REQUEST_READ,
+    PERMISSIONS.PURCHASE_REQUEST_APPROVE,
+    PERMISSIONS.PROCUREMENT_MANAGE,
+  ],
+
+  [ROLES.REQUESTER]: [
+    PERMISSIONS.COMPANY_READ,
+    PERMISSIONS.PURCHASE_REQUEST_CREATE,
+    PERMISSIONS.PURCHASE_REQUEST_READ,
+  ],
+
+  [ROLES.APPROVER]: [
+    PERMISSIONS.COMPANY_READ,
+    PERMISSIONS.PURCHASE_REQUEST_READ,
+    PERMISSIONS.PURCHASE_REQUEST_APPROVE,
+  ],
+
+  [ROLES.FINANCE]: [
+    PERMISSIONS.COMPANY_READ,
+    PERMISSIONS.PURCHASE_REQUEST_READ,
+    PERMISSIONS.FINANCE_MANAGE,
+  ],
+
+  [ROLES.AUDITOR]: [
+    PERMISSIONS.COMPANY_READ,
+    PERMISSIONS.USERS_READ,
+    PERMISSIONS.PURCHASE_REQUEST_READ,
+    PERMISSIONS.AUDIT_READ,
+  ],
+
+  [ROLES.VENDOR]: [
+    PERMISSIONS.VENDOR_PORTAL_ACCESS,
+  ],
+});
+
+module.exports = { ROLES, PERMISSIONS, ROLE_PERMISSIONS };
